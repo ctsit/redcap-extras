@@ -11,6 +11,7 @@ before_script:
 script:
 - curl -s http://localhost/redcap/ | grep -i 'Welcome\|Critical Error'
 - ls /var/www/redcap/
+- python tests/test_redcap_hooks.py
 after_success:
 after_failure:
 after_script:
