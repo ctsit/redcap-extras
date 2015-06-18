@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+
+# To run:
+#   python tests/test_redcap_hooks.py
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
@@ -10,12 +14,12 @@ import os
 
 class TestRedcapHooks(unittest.TestCase):
     def setUp(self):
-        #self.driver = webdriver.Firefox()
         self.driver = webdriver.PhantomJS()
         self.driver.set_window_size(1024, 800)
+        #self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(3)
-        #self.base_url = "http://localhost:8080"
         self.base_url = "http://localhost"
+        #self.base_url = "http://localhost:8080"
         self.verificationErrors = []
         self.accept_next_alert = True
 
@@ -53,15 +57,12 @@ class TestRedcapHooks(unittest.TestCase):
         driver.find_element_by_name("occurrences").clear()
         driver.find_element_by_name("occurrences").send_keys("-1")
         Select(driver.find_element_by_name("my_first_instrument_complete")).select_by_visible_text("Complete")
-        driver.find_element_by_xpath("//button[@type='button']").click()
-        time.sleep(30)
         driver.find_element_by_name("submit-btn-cancel").click()
         driver.find_element_by_link_text("Project Home").click()
         driver.find_element_by_link_text("My Projects").click()
         driver.find_element_by_link_text("Control Center").click()
         driver.find_element_by_link_text("General Configuration").click()
-        #os.symlink('examples/redcap_data_entry_form', '/redcap_data/hooks/redcap_data_entry_form')
-        os.symlink('examples/redcap_data_entry_form', '../hooks/redcap_data_entry_form')
+        os.symlink('examples/redcap_data_entry_form', 'hooks/redcap_data_entry_form')
         driver.find_element_by_name("hook_functions_file").clear()
         driver.find_element_by_name("hook_functions_file").send_keys("/redcap_data/hooks/redcap_hooks.php")
         driver.find_element_by_css_selector("input[type=\"submit\"]").click()
@@ -92,8 +93,7 @@ class TestRedcapHooks(unittest.TestCase):
         driver.find_element_by_xpath("(//button[@type='button'])[4]").click()
         driver.find_element_by_xpath("(//button[@type='button'])[3]").click()
         driver.find_element_by_link_text("My Projects").click()
-        #os.remove('/redcap_data/hooks/redcap_data_entry_form')
-        os.remove('../hooks/redcap_data_entry_form')
+        os.remove('hooks/redcap_data_entry_form')
 
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
