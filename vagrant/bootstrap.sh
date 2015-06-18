@@ -22,6 +22,7 @@ SHARED_FOLDER=/vagrant
 
 # Use the latest redcap*.zip file in $SHARED_FOLDER
 REDCAP_ZIP=`ls $SHARED_FOLDER/redcap*.zip | grep "redcap[0-9]\{1,2\}\.[0-9]\{1,2\}\.[0-9]\{1,2\}\.zip" | sort -n | tail -n 1`
+REDCAP_ZIP=`basename $REDCAP_ZIP`
 
 # import helper functions
 . $SHARED_FOLDER/bootstrap_functions.sh
