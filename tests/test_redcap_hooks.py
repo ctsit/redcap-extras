@@ -54,7 +54,7 @@ class TestRedcapHooks(unittest.TestCase):
             time.sleep(0.2)
 
             # Version 6.5.3 needs to un-check the "Auto-numbering for records" option
-            #driver.find_element_by_xpath("""//button[@onclick="saveProjectSetting($(this),'auto_inc_set','1','0',1,'setupChklist-modules');"]""").click()
+            driver.find_element_by_xpath("""//button[@onclick="saveProjectSetting($(this),'auto_inc_set','1','0',1,'setupChklist-modules');"]""").click()
 
             print("Click 'Online Designer'")
             time.sleep(0.2)
