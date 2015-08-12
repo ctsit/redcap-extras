@@ -1,5 +1,7 @@
 language: python
 python: '2.7'
+sudo: false
+
 branches:
     only:
         - /^feature.*$/
@@ -8,9 +10,11 @@ branches:
         - master
 env:
     - CI_REDCAP_ZIP=redcap6.5.3.zip SHARED_FOLDER=./vagrant
-before_install: ./vagrant/travis-before-install.sh
+before_install:
+    - ./vagrant/travis-before-install.sh
+    - phantomjs --version
 install:
-    - sudo -E ./vagrant/bootstrap.sh
+    - ./vagrant/bootstrap.sh
     - pip install selenium
 before_script:
 script:

@@ -35,6 +35,7 @@ class TestRedcapHooks(unittest.TestCase):
             self.driver = webdriver.PhantomJS()
             url = "http://localhost"
 
+        self.driver = webdriver.PhantomJS()
         print("Using url: {}".format(url))
         self.base_url = url
         self.driver.set_window_size(1024, 800)
@@ -57,7 +58,7 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_xpath("""//button[@onclick="saveProjectSetting($(this),'auto_inc_set','1','0',1,'setupChklist-modules');"]""").click()
 
             print("Click 'Online Designer'")
-            time.sleep(0.2)
+            time.sleep(1)
             driver.find_element_by_xpath("//div[@id='setupChklist-design']/table/tbody/tr/td[2]/div[2]/div/button").click()
             driver.find_element_by_id("formlabel-my_first_instrument").click()
             driver.find_element_by_id("btn-last").click()
