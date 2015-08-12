@@ -35,7 +35,6 @@ class TestRedcapHooks(unittest.TestCase):
             self.driver = webdriver.PhantomJS()
             url = "http://localhost"
 
-        self.driver = webdriver.PhantomJS()
         print("Using url: {}".format(url))
         self.base_url = url
         self.driver.set_window_size(1024, 800)

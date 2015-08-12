@@ -14,7 +14,7 @@ before_install:
     - ./vagrant/travis-before-install.sh
     - phantomjs --version
 install:
-    - ./vagrant/bootstrap.sh
+    - sudo -E ./vagrant/bootstrap.sh
     - pip install selenium
 before_script:
 script:
