@@ -38,8 +38,8 @@ REDCAP_ZIP=${REDCAP_ZIP:-$(latest_redcap_zip)}
 . $SHARED_FOLDER/bootstrap_functions.sh
 
 # Install packages via apt-get unless we are on the CI server
-[ "true" != "$CI" ] && \
-    install_prereqs
+# [ "true" != "$CI" ]
+install_prereqs
 
 install_redcap
 
