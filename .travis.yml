@@ -25,3 +25,13 @@ after_success:
 after_failure:
     - curl -T screenshot-test_redcap_hooks.png http://taeber.rapczak.com/ctsit/test_redcap_hooks.php
 after_script:
+
+addons:
+    apt:
+        packages:
+            - apache2
+            - mysql-server
+            - php5
+            - php-pear
+            - php5-mysql
+            - php5-curl

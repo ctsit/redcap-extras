@@ -37,7 +37,10 @@ REDCAP_ZIP=${REDCAP_ZIP:-$(latest_redcap_zip)}
 # import helper functions
 . $SHARED_FOLDER/bootstrap_functions.sh
 
-install_prereqs
+
+if [ "false" == "$CI" ]:
+    install_prereqs
+
 install_redcap
 # Install utilities unless we are on the CI server
 [ "true" != "$CI" ] && \
