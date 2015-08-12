@@ -1,5 +1,8 @@
 .DS_Store
 .vagrant/
+vagrant/*redcap*.zip
+private
 ghostdriver.log
 project.info
 screenshot-timeout.png
+screenshot-test_redcap_hooks.png
