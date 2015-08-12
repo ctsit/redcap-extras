@@ -20,11 +20,11 @@ EOF
 
 chmod 600 ~/.ssh/config
 
-sudo mkdir -p /root/.ssh
-sudo chmod 700 /root/.ssh
-sudo cp ~travis/.ssh/config /root/.ssh/
-sudo cp ~travis/.ssh/id_rsa.github /root/.ssh/
-sudo chmod 600 /root/.ssh/id_rsa.github
+mkdir -p /root/.ssh
+chmod 700 /root/.ssh
+cp ~travis/.ssh/config /root/.ssh/
+cp ~travis/.ssh/id_rsa.github /root/.ssh/
+chmod 600 /root/.ssh/id_rsa.github
 
 # Destination of redcap*.zip
 : ${SHARED_FOLDER:=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )}
