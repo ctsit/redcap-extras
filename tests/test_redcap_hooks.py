@@ -24,7 +24,7 @@ class TestRedcapHooks(unittest.TestCase):
     def setUp(self):
 
         # set to true to test in the Vagrant
-        has_gui = True
+        has_gui = False
         if has_gui:
             self.driver = webdriver.Firefox()
             self.base_url = "http://localhost:8080"
