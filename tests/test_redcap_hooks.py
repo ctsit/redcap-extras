@@ -24,14 +24,19 @@ class TestRedcapHooks(unittest.TestCase):
     def setUp(self):
 
         # set to true to test in the Vagrant
-        has_gui = False
-        if has_gui:
-            self.driver = webdriver.Firefox()
-            self.base_url = "http://localhost:8080"
-        else:
-            self.driver = webdriver.PhantomJS()
-            self.base_url = "http://localhost"
+        run_headless = os.getenv('CONTINUOUS_INTEGRATION', '') > ''
 
+        if not run_headless:
+            print("Using Firefox driver")
+            self.driver = webdriver.Firefox()
+            url = "http://localhost:8080"
+        else:
+            print("Using PhantomJS driver")
+            self.driver = webdriver.PhantomJS()
+            url = "http://localhost"
+
+        print("Using url: {}".format(url))
+        self.base_url = url
         self.driver.set_window_size(1024, 800)
         self.driver.implicitly_wait(3)
         self.verificationErrors = []
@@ -46,6 +51,13 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_id("app_title").send_keys("This is the Project Title")
             Select(driver.find_element_by_id("purpose")).select_by_visible_text("Practice / Just for fun")
             driver.find_element_by_css_selector("input[type=\"button\"]").click()
+            time.sleep(0.2)
+
+            # Version 6.5.3 needs to un-check the "Auto-numbering for records" option
+            #driver.find_element_by_xpath("""//button[@onclick="saveProjectSetting($(this),'auto_inc_set','1','0',1,'setupChklist-modules');"]""").click()
+
+            print("Click 'Online Designer'")
+            time.sleep(0.2)
             driver.find_element_by_xpath("//div[@id='setupChklist-design']/table/tbody/tr/td[2]/div[2]/div/button").click()
             driver.find_element_by_id("formlabel-my_first_instrument").click()
             driver.find_element_by_id("btn-last").click()
@@ -100,7 +112,7 @@ class TestRedcapHooks(unittest.TestCase):
             os.symlink('library/redcap_data_entry_form', 'hooks/redcap_data_entry_form')
             driver.find_element_by_name("hook_functions_file").clear()
             driver.find_element_by_name("hook_functions_file").send_keys("/redcap_data/hooks/redcap_hooks.php")
-            time.sleep(2)
+            time.sleep(0.2)
             driver.find_element_by_css_selector("input[type=\"submit\"]").click()
             print("Hook enabled...")
 
@@ -125,7 +137,7 @@ class TestRedcapHooks(unittest.TestCase):
             Select(driver.find_element_by_name("my_first_instrument_complete")).select_by_visible_text("Complete")
             driver.find_element_by_css_selector("option[value=\"2\"]").click()
             driver.find_element_by_name("submit-btn-saverecord").click()
-            time.sleep(1)
+            time.sleep(0.2)
 
             print("Verify that the data was saved with the hook enabled")
             Select(driver.find_element_by_id("record_select2")).select_by_visible_text("1")

@@ -1,6 +1,6 @@
 .DS_Store
 .vagrant/
-vagrant/redcap*.zip
+vagrant/*redcap*.zip
 private
 ghostdriver.log
 project.info
