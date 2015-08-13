@@ -1,5 +1,8 @@
 #!/bin/bash
 # travis-before-install.sh
+REPO_URL=git@github.com:ctsit/redcap.git
+REPO_NAME=redcap
+
 set -ev
 
 # Decrypt the private key
@@ -11,7 +14,7 @@ cat <<EOF>> ~/.ssh/config
 Host *
     StrictHostKeyChecking  no
 
-Host    github.com
+Host github.com
     Hostname        github.com
     IdentityFile    ~/.ssh/id_rsa.github
     IdentitiesOnly  yes
@@ -24,18 +27,20 @@ chmod 600 ~/.ssh/config
 # Destination of redcap*.zip
 : ${SHARED_FOLDER:=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )}
 
-# Download a REDCap.zip to install
+echo "Download a redcap.zip file to install"
 OLDWD=`pwd`
 MYTEMP=`mktemp -d`
-cd $MYTEMP
-git clone git@github.com:ctsit/redcap-lts.git
-cd redcap-lts
-REDCAP_FOLDER=`pwd`
+REDCAP_FOLDER=$MYTEMP/$REPO_NAME
 
-# restore the old working directory
-cd $OLDWD
+pushd $MYTEMP
+    echo "cloning into: $MYTEMP"
+    git clone $REPO_URL
+popd
 
-# Verify that the zip file exists specified by Environment Variable exists
+ls -al $REDCAP_FOLDER/releases-lts
+ls -al $REDCAP_FOLDER/releases-standard
+
+# Verify that the zip file specified as an environment variable exists
 if [ ! -e $REDCAP_FOLDER/$CI_REDCAP_ZIP ]; then
 	echo "The requested zip file, $CI_REDCAP_ZIP, does not exist at $REDCAP_FOLDER"
 	exit 1
@@ -44,3 +49,4 @@ fi
 # copy the REDCap zip file to where the install_redcap function expects it
 echo "Using $REDCAP_FOLDER/$CI_REDCAP_ZIP"
 cp $REDCAP_FOLDER/$CI_REDCAP_ZIP $SHARED_FOLDER/
+ls -al $SHARED_FOLDER

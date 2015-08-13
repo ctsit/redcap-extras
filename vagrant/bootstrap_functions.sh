@@ -120,5 +120,6 @@ function check_redcap_status() {
 }
 
 function install_utils() {
+    apt-get install -y vim ack-grep
     cp $SHARED_FOLDER/aliases /home/vagrant/.bash_aliases
 }

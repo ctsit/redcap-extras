@@ -9,7 +9,8 @@ branches:
         - develop
         - master
 env:
-    - CI_REDCAP_ZIP=redcap6.5.3.zip SHARED_FOLDER=./vagrant
+    - CI_REDCAP_ZIP=releases-lts/redcap6.5.3.zip
+    - SHARED_FOLDER=./vagrant
 before_install:
     - ./vagrant/travis-before-install.sh
 install:
