@@ -11,6 +11,7 @@ branches:
 env:
     # When you specify multiple variables per item in the env array (matrix variables), one build is triggered per item.
     - CI_REDCAP_ZIP=releases-lts/redcap6.5.3.zip SHARED_FOLDER=./vagrant
+    - CI_REDCAP_ZIP=releases-standard/redcap6.8.0.zip SHARED_FOLDER=./vagrant
 before_install:
     - ./vagrant/travis-before-install.sh
 install:
