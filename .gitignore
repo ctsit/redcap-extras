@@ -1,5 +1,6 @@
 .DS_Store
 .vagrant/
+hooks/redcap_data_entry_form
 vagrant/*redcap*.zip
 private
 ghostdriver.log
