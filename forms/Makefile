@@ -21,6 +21,13 @@ API_CALL             := curl -s -X POST $(REDCAP_URL)/api/ -d token=$(API_TOKEN)
 REDCAP_PROJECT_URL   := $(REDCAP_URL)/redcap_v$(REDCAP_VERSION)/ProjectSetup/index.php?pid=$(PROJECT_ID)
 UPLOAD_CALL          := python ../scripts/upload-data-dictionary.py --url $(REDCAP_PROJECT_URL) --data_dictionary
 
+help:
+	@echo "Available tasks :"
+	@echo "\t upload_one <form_name>   - Add a single dictionary to a project"
+	@echo "\t upload_all               - Add every dictionary to a project"
+	@echo "\t merge_all                - make the merged dictionary file"
+	@echo "\t get_one                  - export one dictionary"
+
 upload_one:
 	@# Note: provide the form name as: ae_coding, adverse_events...
 	$(eval FORM_FILE := $(filter-out $@,$(MAKECMDGOALS)).csv)
