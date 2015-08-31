@@ -7,3 +7,5 @@ project.info
 screenshot-timeout.png
 screenshot-test_redcap_hooks.png
 hooks/redcap_data_entry_form
+Makefile.ini
+data-dictionary.csv

@@ -34,8 +34,11 @@ upload_all:
 
 merge_all:
 	rm -f data-dictionary.csv
-	cat z1*.csv > data-dictionary.csv
-	awk 'FNR>2' `find ./ -not -name "z1*.csv" -not -name "Makefile*" -not -name "data*dictionary.csv"` >> data-dictionary.csv
+	cat form_z1*.csv > data-dictionary.csv
+	awk 'FNR>2' form_adverse_events.csv >> data-dictionary.csv
+	awk 'FNR>2' form_ae_coding.csv >> data-dictionary.csv
+	awk 'FNR>2' form_cm_coding.csv >> data-dictionary.csv
+	awk 'FNR>2' form_conmeds.csv >> data-dictionary.csv
 
 get_one:
 	@# Note: provide the form name as: ae_coding, adverse_events...
