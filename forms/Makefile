@@ -21,7 +21,7 @@ MYDIR                := `pwd`
 REPOROOT             := `pwd`/../
 API_CALL             := curl -s -X POST $(REDCAP_URL)/api/ -d token=$(API_TOKEN) -d content=metadata -d format=csv
 REDCAP_PROJECT_URL   := $(REDCAP_URL)/redcap_v$(REDCAP_VERSION)/ProjectSetup/index.php?pid=$(PROJECT_ID)
-UPLOAD_CALL          := python ../scripts/upload-data-dictionary.py --url $(REDCAP_PROJECT_URL) --data_dictionary
+UPLOAD_CALL          := python ../scripts/upload-data-dictionary.py --url $(REDCAP_PROJECT_URL) --data_dictionary -s
 
 help:
 	@echo "Available tasks :"
