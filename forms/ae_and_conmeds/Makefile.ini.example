@@ -1,0 +1,10 @@
+# This file can be copied to Makefile.ini so it can be `visible` to the Makefile
+
+# Did you change the port?
+redcap_url = http://localhost:8080/redcap
+
+redcap_version = 6.0.x
+
+project_id = 12
+
+api_token = redcap_api_token

@@ -34,4 +34,4 @@ These commands simplify interaction with the REDCap database:
 Miscellaneous
 -------------
 
-- check_redcap - performs a simple status check on the REDCap application
+- check_app - performs a simple status check on the REDCap application

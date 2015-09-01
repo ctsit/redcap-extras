@@ -8,18 +8,37 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import UnexpectedAlertPresentException
+
+
 import unittest, time, re
 import os
 
 
 class TestRedcapHooks(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.PhantomJS()
+
+        # set to true to test in the Vagrant
+        run_headless = os.getenv('CONTINUOUS_INTEGRATION', '') > ''
+
+        if not run_headless:
+            print("Using Firefox driver")
+            self.driver = webdriver.Firefox()
+            url = "http://localhost:8080"
+        else:
+            print("Using PhantomJS driver")
+            self.driver = webdriver.PhantomJS()
+            url = "http://localhost"
+
+        print("Using url: {}".format(url))
+        self.base_url = url
         self.driver.set_window_size(1024, 800)
-        #self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(3)
-        self.base_url = "http://localhost"
-        #self.base_url = "http://localhost:8080"
         self.verificationErrors = []
         self.accept_next_alert = True
 
@@ -32,6 +51,13 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_id("app_title").send_keys("This is the Project Title")
             Select(driver.find_element_by_id("purpose")).select_by_visible_text("Practice / Just for fun")
             driver.find_element_by_css_selector("input[type=\"button\"]").click()
+            time.sleep(0.2)
+
+            # Version 6.5.3 needs to un-check the "Auto-numbering for records" option
+            driver.find_element_by_xpath("""//button[@onclick="saveProjectSetting($(this),'auto_inc_set','1','0',1,'setupChklist-modules');"]""").click()
+
+            print("Click 'Online Designer'")
+            time.sleep(1)
             driver.find_element_by_xpath("//div[@id='setupChklist-design']/table/tbody/tr/td[2]/div[2]/div/button").click()
             driver.find_element_by_id("formlabel-my_first_instrument").click()
             driver.find_element_by_id("btn-last").click()
@@ -50,40 +76,82 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_id("field_note").send_keys("0-50 (<span class=valid>-1</span> if unknown)")
             driver.find_element_by_xpath("(//button[@type='button'])[2]").click()
             time.sleep(0.3)
-            driver.find_element_by_link_text("Add / Edit Records").click()
-            driver.find_element_by_link_text("Add / Edit Records").click()
-            time.sleep(0.3)
-            # 'Add new record' button
-            driver.find_element_by_xpath('//*[@id="center_inner"]/table/tbody/tr[4]/td[2]/button').click()
+
+            print("Adding subject 1...")
+            wait = WebDriverWait(driver, 10)
+            xpath = "//a[contains(text(),'Add / Edit Records')]"
+            ele = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+            ele.click()
+
+            xpath = "//input[@id='inputString']"
+            ele = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+            ele.clear()
+            ele.send_keys(1)
+            ele.send_keys(Keys.ENTER)
+            time.sleep(0.5)
+
+            print("Enter data for subject 1")
             driver.find_element_by_name("occurrences").clear()
             driver.find_element_by_name("occurrences").send_keys("-1")
+
+            print("Set my_first_instrument_complete")
             Select(driver.find_element_by_name("my_first_instrument_complete")).select_by_visible_text("Complete")
             driver.find_element_by_name("submit-btn-cancel").click()
             driver.find_element_by_link_text("Project Home").click()
             driver.find_element_by_link_text("My Projects").click()
             driver.find_element_by_link_text("Control Center").click()
             driver.find_element_by_link_text("General Configuration").click()
-            os.symlink('examples/redcap_data_entry_form', 'hooks/redcap_data_entry_form')
+
+            try:
+                os.remove('hooks/redcap_data_entry_form')
+            except Exception as exc:
+                print("Moving on {}".format(exc))
+
+            print("Create symlink for the hook we are activating: ")
+            print("ln -s library/redcap_data_entry_form hooks/redcap_data_entry_form")
+            os.symlink('library/redcap_data_entry_form', 'hooks/redcap_data_entry_form')
             driver.find_element_by_name("hook_functions_file").clear()
             driver.find_element_by_name("hook_functions_file").send_keys("/redcap_data/hooks/redcap_hooks.php")
+            time.sleep(0.2)
             driver.find_element_by_css_selector("input[type=\"submit\"]").click()
+            print("Hook enabled...")
+
+            print("Adding data to subject 1... This time the hook should be active")
             driver.find_element_by_link_text("My Projects").click()
             driver.find_element_by_link_text("This is the Project Title").click()
-            driver.find_element_by_link_text("Add / Edit Records").click()
-            # 'Add new record' button
-            driver.find_element_by_xpath('//*[@id="center_inner"]/table/tbody/tr[4]/td[2]/button').click()
+            wait = WebDriverWait(driver, 10)
+            xpath = "//a[contains(text(),'Add / Edit Records')]"
+            ele = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+            ele.click()
+
+            xpath = "//input[@id='inputString']"
+            ele = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
+            ele.clear()
+            ele.send_keys(1)
+            ele.send_keys(Keys.ENTER)
+            time.sleep(0.5)
+
+            print("Enter data for subject 1")
             driver.find_element_by_name("occurrences").clear()
             driver.find_element_by_name("occurrences").send_keys("-1")
             Select(driver.find_element_by_name("my_first_instrument_complete")).select_by_visible_text("Complete")
             driver.find_element_by_css_selector("option[value=\"2\"]").click()
             driver.find_element_by_name("submit-btn-saverecord").click()
-            time.sleep(0.1)
+            time.sleep(0.2)
+
+            print("Verify that the data was saved with the hook enabled")
             Select(driver.find_element_by_id("record_select2")).select_by_visible_text("1")
-            try: self.assertEqual("-1", driver.find_element_by_name("occurrences").get_attribute("value"))
-            except AssertionError as e: self.verificationErrors.append(str(e))
+            try:
+                self.assertEqual("-1", driver.find_element_by_name("occurrences").get_attribute("value"))
+            except AssertionError as e:
+                self.verificationErrors.append(str(e))
+
+            print("Delete the record we created...")
             driver.find_element_by_name("submit-btn-delete").click()
             driver.find_element_by_xpath("(//button[@type='button'])[2]").click()
             driver.find_element_by_link_text("My Projects").click()
+
+            print("Delete the project we created...")
             driver.find_element_by_link_text("This is the Project Title").click()
             driver.find_element_by_css_selector("li > a").click()
             driver.find_element_by_link_text("Other Functionality").click()
@@ -94,10 +162,15 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_xpath("(//button[@type='button'])[4]").click()
             driver.find_element_by_xpath("(//button[@type='button'])[3]").click()
             driver.find_element_by_link_text("My Projects").click()
+
+            print("Remove the soft link for the hook")
             os.remove('hooks/redcap_data_entry_form')
         except:
+            print("Saving sreenshot to file: screenshot-test_redcap_hooks.png")
             driver.get_screenshot_as_file('screenshot-test_redcap_hooks.png')
             raise
+
+        print("Done. Yay!")
 
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)

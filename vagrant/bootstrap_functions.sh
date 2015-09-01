@@ -35,6 +35,8 @@ function install_prereqs() {
 
 # Setup REDCap
 function install_redcap() {
+    echo "List the contents of /var/www"
+    ls -al /var/www
     rm -rf /var/www/*
 
     # extract a standard REDCap zip file as downloaded from Vanderbilt.
@@ -118,5 +120,6 @@ function check_redcap_status() {
 }
 
 function install_utils() {
+    apt-get install -y vim ack-grep
     cp $SHARED_FOLDER/aliases /home/vagrant/.bash_aliases
 }

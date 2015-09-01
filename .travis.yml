@@ -1,5 +1,7 @@
 language: python
 python: '2.7'
+sudo: required
+
 branches:
     only:
         - /^feature.*$/
@@ -7,11 +9,18 @@ branches:
         - develop
         - master
 env:
-    - CI_REDCAP_ZIP=redcap6.5.3.zip SHARED_FOLDER=./vagrant
-before_install: ./vagrant/travis-before-install.sh
+    # When you specify multiple variables per item in the env array (matrix variables), one build is triggered per item.
+    - CI_REDCAP_ZIP=releases-lts/redcap6.5.3.zip SHARED_FOLDER=./vagrant
+    - CI_REDCAP_ZIP=releases-lts/redcap6.5.9.zip SHARED_FOLDER=./vagrant
+    - CI_REDCAP_ZIP=releases-standard/redcap6.8.0.zip SHARED_FOLDER=./vagrant
+before_install:
+    - ./vagrant/travis-before-install.sh
 install:
     - sudo -E ./vagrant/bootstrap.sh
+    - phantomjs --version
     - pip install selenium
+    - pip freeze | grep selenium
+    - apachectl -V
 before_script:
 script:
     - curl -s http://localhost/redcap/ | grep -i 'Welcome\|Critical Error'
@@ -21,3 +30,13 @@ after_success:
 after_failure:
     - curl -T screenshot-test_redcap_hooks.png http://taeber.rapczak.com/ctsit/test_redcap_hooks.php
 after_script:
+
+#addons:
+#    apt:
+#        packages:
+#            - apache2
+#            - mysql-server
+#            - php5
+#            - php-pear
+#            - php5-mysql
+#            - php5-curl
