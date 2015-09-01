@@ -17,6 +17,8 @@ ifneq ("$(wildcard $(MAKE_CONFIG_FILE))", "")
 endif
 
 # Use variables
+MYDIR                := `pwd`
+REPOROOT             := `pwd`/../
 API_CALL             := curl -s -X POST $(REDCAP_URL)/api/ -d token=$(API_TOKEN) -d content=metadata -d format=csv
 REDCAP_PROJECT_URL   := $(REDCAP_URL)/redcap_v$(REDCAP_VERSION)/ProjectSetup/index.php?pid=$(PROJECT_ID)
 UPLOAD_CALL          := python ../scripts/upload-data-dictionary.py --url $(REDCAP_PROJECT_URL) --data_dictionary
@@ -27,6 +29,8 @@ help:
 	@echo "\t upload_all               - Add every dictionary to a project"
 	@echo "\t merge_all                - make the merged dictionary file"
 	@echo "\t get_one                  - export one dictionary"
+	@echo "\t test                     - test the forms by loading them into REDCap"
+	@echo "\t clean                    - remove stray files from directory"
 
 upload_one:
 	@# Note: provide the form name as: ae_coding, adverse_events...
@@ -51,3 +55,11 @@ get_one:
 	@# Note: provide the form name as: ae_coding, adverse_events...
 	@$(eval FORM := $(filter-out $@,$(MAKECMDGOALS)))
 	@$(API_CALL) -d forms[]=$(FORM)
+
+test: merge_all
+	$(REPOROOT)/scripts/install MY_TEST_PROJECT data-dictionary.csv
+	@#TODO: need to add tests of success
+
+clean:
+	rm data-dictionary.csv
+	rm ghostdriver.log
