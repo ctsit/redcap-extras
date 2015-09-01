@@ -61,5 +61,4 @@ test: merge_all
 	@#TODO: need to add tests of success
 
 clean:
-	rm data-dictionary.csv
-	rm ghostdriver.log
+	rm data-dictionary.csv screenshot-timeout.png ghostdriver.log project.info
