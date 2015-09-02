@@ -31,7 +31,7 @@ class TestRedcapHooks(unittest.TestCase):
             self.driver = webdriver.Firefox()
             url = "http://localhost:8080"
         else:
-            print("Using PhantomJS driver")
+            print("Using SauceLabs driver")
             self.driver = webdriver.PhantomJS()
             url = "http://localhost"
 
