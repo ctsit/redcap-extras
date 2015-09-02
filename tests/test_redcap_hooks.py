@@ -175,7 +175,7 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_link_text("My Projects").click()
 
             print("Remove the soft link for the hook")
-            os.remove('hooks/redcap_data_entry_form')
+            os.remove('hook/redcap_data_entry_form')
         except:
             print("Saving sreenshot to file: screenshot-test_redcap_hooks.png")
             driver.get_screenshot_as_file('screenshot-test_redcap_hooks.png')
