@@ -172,7 +172,7 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_xpath("(//button[@type='button'])[2]").click()
             driver.find_element_by_xpath("(//button[@type='button'])[4]").click()
             driver.find_element_by_xpath("(//button[@type='button'])[3]").click()
-            driver.find_element_by_link_text("My Project").click()
+            driver.find_element_by_link_text("My Projects").click()
 
             print("Remove the soft link for the hook")
             os.remove('hooks/redcap_data_entry_form')
