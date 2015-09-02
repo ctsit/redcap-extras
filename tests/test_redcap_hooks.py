@@ -172,10 +172,10 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_xpath("(//button[@type='button'])[2]").click()
             driver.find_element_by_xpath("(//button[@type='button'])[4]").click()
             driver.find_element_by_xpath("(//button[@type='button'])[3]").click()
-            driver.find_element_by_link_text("My Projects").click()
+            driver.find_element_by_link_text("My Project").click()
 
             print("Remove the soft link for the hook")
-            os.remove('hook/redcap_data_entry_form')
+            os.remove('hooks/redcap_data_entry_form')
         except:
             print("Saving sreenshot to file: screenshot-test_redcap_hooks.png")
             driver.get_screenshot_as_file('screenshot-test_redcap_hooks.png')
