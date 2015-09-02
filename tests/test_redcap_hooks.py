@@ -5,6 +5,7 @@
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
@@ -32,8 +33,18 @@ class TestRedcapHooks(unittest.TestCase):
             url = "http://localhost:8080"
         else:
             print("Using SauceLabs driver")
-            self.driver = webdriver.PhantomJS()
-            url = "http://localhost"
+            # This is the only code you need to edit in your existing scripts.
+            # The command_executor tells the test to run on Sauce, while the desired_capabilties
+            # parameter tells us which browsers and OS to spin up.
+            desired_cap = {
+                'platform': "Mac OS X 10.9",
+                'browserName': "firefox",
+                'version': "40"
+            }
+            self.driver = webdriver.Remote(
+                command_executor='http://ctsit:c600f49a-9697-4358-8c3e-2e74c26f9f2f@ondemand.saucelabs.com:80/wd/hub',
+                desired_capabilities=desired_cap)
+            url = "http://localhost:8080"
 
         print("Using url: {}".format(url))
         self.base_url = url
@@ -194,6 +205,8 @@ class TestRedcapHooks(unittest.TestCase):
         finally: self.accept_next_alert = True
 
     def tearDown(self):
+        # This is where you tell Sauce Labs to stop running tests on your behalf.
+        # It's important so that you aren't billed after your test finishes.
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
 
