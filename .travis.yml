@@ -9,10 +9,9 @@ branches:
         - develop
         - master
 env:
-    # When you specify multiple variables per item in the env array (matrix variables), one build is triggered per item.
-    - CI_REDCAP_ZIP=releases-lts/redcap6.5.3.zip SHARED_FOLDER=./vagrant
-    - CI_REDCAP_ZIP=releases-lts/redcap6.5.9.zip SHARED_FOLDER=./vagrant
-    - CI_REDCAP_ZIP=releases-standard/redcap6.8.0.zip SHARED_FOLDER=./vagrant
+  global:
+    - secure: RAzBBv5Ac7AcoRR4YAps38WEGeYzv3F/6UEIdhcE50JALSE27rrEgUHrw/lCLcJUpBHicw4tfS9e9lNB0MQwDvOt0KHGTHdEjKl4+qzqZ68H6WaZFuKh/t98gvvNEccR/ay47KLt+gs9B9Obc7nTTFQx2aiIgb7aW759cyDeldk=
+    - secure: V9mQSU2iQCDvo1yXieThEMXWT3Cx1vZYAjxxHAtOdIwiyWRsi33lP3XaZmzRdIdEVL3//RjWOeusdfhs/u0jH2KorCvPEneyR3Q53yg9ni9CpiX60vM/i31jf+sRHL1DQ+fnIyqs5vQZWXApRW4eQ8FuEBEq/ie+c7VdZvbmfQA=
 addons:
   sauce_connect:
     username: ctsit
