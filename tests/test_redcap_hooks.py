@@ -41,8 +41,11 @@ class TestRedcapHooks(unittest.TestCase):
                 'browserName': "firefox",
                 'version': "40"
             }
+            self.username = os.environ['SAUCE_USERNAME']
+            self.key = os.environ['SAUCE_ACCESS_KEY']
+            self.sauce_url = "%s:%s@ondemand.saucelabs.com:80/wd/hub" % (self.username, self.key)
             self.driver = webdriver.Remote(
-                command_executor='http://ctsit:c600f49a-9697-4358-8c3e-2e74c26f9f2f@ondemand.saucelabs.com:80/wd/hub',
+                command_executor="http://%s/wd/hub" % self.sauce_url,
                 desired_capabilities=desired_cap)
             url = "http://localhost:8080"
 
