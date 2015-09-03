@@ -60,7 +60,7 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_css_selector("font").click()
             driver.find_element_by_id("app_title").clear()
             driver.find_element_by_id("app_title").send_keys("This is the Project Title")
-            Select(driver.find_element_by_id("purpose")).select_by_visible_text("Practice / Just for fun")
+            Select(driver.find_element_by_id("purpose")).select_by_visible_text("Practice")
             driver.find_element_by_css_selector("input[type=\"button\"]").click()
             time.sleep(0.2)
 
