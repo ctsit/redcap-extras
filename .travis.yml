@@ -16,9 +16,9 @@ env:
     - CI_REDCAP_ZIP=releases-lts/redcap6.5.9.zip SHARED_FOLDER=./vagrant
     - CI_REDCAP_ZIP=releases-standard/redcap6.8.0.zip SHARED_FOLDER=./vagrant
 addons:
-  sauce_connect: true
-    # username: ctsit
-    # access_key: c600f49a-9697-4358-8c3e-2e74c26f9f2f
+  sauce_connect:
+    username: ctsit
+    access_key: c600f49a-9697-4358-8c3e-2e74c26f9f2f
 before_install:
     - ./vagrant/travis-before-install.sh
 install:
