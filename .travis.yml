@@ -18,7 +18,8 @@ env:
 addons:
   sauce_connect:
     username: ctsit
-    access_key: c600f49a-9697-4358-8c3e-2e74c26f9f2f
+    access_key:
+      secure: V9mQSU2iQCDvo1yXieThEMXWT3Cx1vZYAjxxHAtOdIwiyWRsi33lP3XaZmzRdIdEVL3//RjWOeusdfhs/u0jH2KorCvPEneyR3Q53yg9ni9CpiX60vM/i31jf+sRHL1DQ+fnIyqs5vQZWXApRW4eQ8FuEBEq/ie+c7VdZvbmfQA=
 before_install:
     - ./vagrant/travis-before-install.sh
 install:
