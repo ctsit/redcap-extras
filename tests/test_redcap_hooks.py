@@ -44,7 +44,7 @@ class TestRedcapHooks(unittest.TestCase):
             self.driver = webdriver.Remote(
                 command_executor='http://ctsit:c600f49a-9697-4358-8c3e-2e74c26f9f2f@ondemand.saucelabs.com:80/wd/hub',
                 desired_capabilities=desired_cap)
-            url = "http://localhost:8080"
+            url = "http://localhost"
 
         print("Using url: {}".format(url))
         self.base_url = url
@@ -172,7 +172,7 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_xpath("(//button[@type='button'])[2]").click()
             driver.find_element_by_xpath("(//button[@type='button'])[4]").click()
             driver.find_element_by_xpath("(//button[@type='button'])[3]").click()
-            driver.find_element_by_link_text("My Project").click()
+            driver.find_element_by_link_text("My Projects").click()
 
             print("Remove the soft link for the hook")
             os.remove('hooks/redcap_data_entry_form')
