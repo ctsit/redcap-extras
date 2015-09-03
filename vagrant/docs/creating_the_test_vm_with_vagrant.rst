@@ -111,12 +111,13 @@ at the console using:
 
 This will connect you to a shell on the virtual machine.
 
-You can check the REDCap server from the console with the command ``check_redcap``.  You will see output like this if it is running correctly:
+You can check the REDCap server from the console with the command ``check_app``.
+You will see output like this if it is running correctly:
 
 .. raw:: html
 
    <pre>
-      vagrant@redcap:~$ check_redcap
+      vagrant@redcap:~$ check_app
             <b>Welcome to REDCap!</b>
    </pre>
 
