@@ -43,6 +43,8 @@ class TestRedcapHooks(unittest.TestCase):
             }
             print os.environ['SAUCE_USERNAME']
             print os.environ['SAUCE_ACCESS_KEY']
+            sauce_url = "{0}:{1}".format(os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
+            print sauce_url
             self.driver = webdriver.Remote(
                 command_executor='http://ctsit:c600f49a-9697-4358-8c3e-2e74c26f9f2f@ondemand.saucelabs.com:80/wd/hub',
                 desired_capabilities=desired_cap)
