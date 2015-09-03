@@ -41,6 +41,8 @@ class TestRedcapHooks(unittest.TestCase):
                 'browserName': "firefox",
                 'version': "40"
             }
+            print os.environ['SAUCE_USERNAME']
+            print os.environ['SAUCE_ACCESS_KEY']
             self.driver = webdriver.Remote(
                 command_executor='http://ctsit:c600f49a-9697-4358-8c3e-2e74c26f9f2f@ondemand.saucelabs.com:80/wd/hub',
                 desired_capabilities=desired_cap)
@@ -60,7 +62,7 @@ class TestRedcapHooks(unittest.TestCase):
             driver.find_element_by_css_selector("font").click()
             driver.find_element_by_id("app_title").clear()
             driver.find_element_by_id("app_title").send_keys("This is the Project Title")
-            Select(driver.find_element_by_id("purpose")).select_by_visible_text("Practice")
+            Select(driver.find_element_by_id("purpose")).select_by_visible_text("Practice / Just for fun")
             driver.find_element_by_css_selector("input[type=\"button\"]").click()
             time.sleep(0.2)
 
