@@ -1,5 +1,7 @@
 language: python
 python: '2.7'
+sudo: required
+
 branches:
     only:
         - /^feature.*$/
@@ -7,17 +9,33 @@ branches:
         - develop
         - master
 env:
-    - CI_REDCAP_ZIP=redcap6.5.3.zip SHARED_FOLDER=./vagrant
-before_install: ./vagrant/travis-before-install.sh
+  global:
+    - CI_REDCAP_ZIP=releases-lts/redcap6.5.3.zip SHARED_FOLDER=./vagrant
+    - CI_REDCAP_ZIP=releases-lts/redcap6.5.9.zip SHARED_FOLDER=./vagrant
+    - CI_REDCAP_ZIP=releases-standard/redcap6.8.0.zip SHARED_FOLDER=./vagrant
+addons:
+  sauce_connect:
+    username: ctsit
+    access_key: c600f49a-9697-4358-8c3e-2e74c26f9f2f
+before_install:
+    - ./vagrant/travis-before-install.sh
 install:
     - sudo -E ./vagrant/bootstrap.sh
+    - phantomjs --version
     - pip install selenium
-before_script:
+    - pip freeze | grep selenium
+    - apachectl -V
 script:
     - curl -s http://localhost/redcap/ | grep -i 'Welcome\|Critical Error'
     - ls /var/www/redcap/
     - python tests/test_redcap_hooks.py
-after_success:
-after_failure:
-    - curl -T screenshot-test_redcap_hooks.png http://taeber.rapczak.com/ctsit/test_redcap_hooks.php
-after_script:
+
+#addons:
+#    apt:
+#        packages:
+#            - apache2
+#            - mysql-server
+#            - php5
+#            - php-pear
+#            - php5-mysql
+#            - php5-curl
