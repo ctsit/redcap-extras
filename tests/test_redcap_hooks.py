@@ -33,29 +33,21 @@ class TestRedcapHooks(unittest.TestCase):
             url = "http://localhost:8080"
         else:
             print("Using SauceLabs driver")
-
-            # ----------------------------------------------------------------
             # This is the only code you need to edit in your existing scripts.
-            # The command_executor tells the test to run on Sauce, while the
-            # desired_capabilties parameter tells us which browsers and OS to
-            # spin up.
-            # ----------------------------------------------------------------
-
+            # The command_executor tells the test to run on Sauce, while the desired_capabilties
+            # parameter tells us which browsers and OS to spin up.
             desired_cap = {
                 'platform': "Mac OS X 10.9",
                 'browserName': "firefox",
                 'version': "40"
             }
-
-            sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(
-                os.environ['SAUCE_USERNAME'],
-                os.environ['SAUCE_ACCESS_KEY'])
-
+            print os.environ['SAUCE_USERNAME']
+            print os.environ['SAUCE_ACCESS_KEY']
+            sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
+            print sauce_url
             self.driver = webdriver.Remote(
                 command_executor=sauce_url,
                 desired_capabilities=desired_cap)
-            # ----------------------------------------------------------------
-
             url = "http://localhost:8080"
 
         print("Using url: {}".format(url))

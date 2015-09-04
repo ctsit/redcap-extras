@@ -29,3 +29,13 @@ script:
     - curl -s http://localhost/redcap/ | grep -i 'Welcome\|Critical Error'
     - ls /var/www/redcap/
     - python tests/test_redcap_hooks.py
+
+#addons:
+#    apt:
+#        packages:
+#            - apache2
+#            - mysql-server
+#            - php5
+#            - php-pear
+#            - php5-mysql
+#            - php5-curl
