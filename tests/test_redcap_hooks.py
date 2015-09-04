@@ -57,7 +57,7 @@ class TestRedcapHooks(unittest.TestCase):
             print "Initialized remote web driver"
             # ----------------------------------------------------------------
 
-            url = "http://localhost:8080"
+            url = "http://localhost"
 
         print("Using url: {}".format(url))
         self.base_url = url
