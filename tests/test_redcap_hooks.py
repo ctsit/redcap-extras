@@ -34,12 +34,13 @@ class TestRedcapHooks(unittest.TestCase):
         else:
             print("Using SauceLabs driver")
 
-            # ****************************************************************
+            # ----------------------------------------------------------------
             # This is the only code you need to edit in your existing scripts.
             # The command_executor tells the test to run on Sauce, while the
             # desired_capabilties parameter tells us which browsers and OS to
             # spin up.
-            # ****************************************************************
+            # ----------------------------------------------------------------
+
             desired_cap = {
                 'platform': "Mac OS X 10.9",
                 'browserName': "firefox",
@@ -219,7 +220,6 @@ class TestRedcapHooks(unittest.TestCase):
         # This is where you tell Sauce Labs to stop running tests on your behalf.
         # It's important so that you aren't billed after your test finishes.
         self.driver.quit()
-
         self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":
