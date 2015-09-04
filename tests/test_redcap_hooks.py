@@ -40,13 +40,12 @@ class TestRedcapHooks(unittest.TestCase):
             # desired_capabilties parameter tells us which browsers and OS to
             # spin up.
             # ----------------------------------------------------------------
-            print os.environ['TRAVIS_JOB_NUMBER']
             desired_cap = {
                 'platform': "Mac OS X 10.10",
                 'browserName': "firefox",
-                'version': "40",
-                'tunnelIdentifier': os.environ['TRAVIS_JOB_NUMBER']
+                'version': "40"
             }
+            desired_cap['tunnel-identifier'] = os.environ['TRAVIS_JOB_NUMBER']
             sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(
                 os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
 
