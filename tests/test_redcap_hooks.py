@@ -45,8 +45,9 @@ class TestRedcapHooks(unittest.TestCase):
                 'browserName': "firefox",
                 'version': "40"
             }
-            sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(
-                os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
+            # sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(
+            #     os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
+            sauce_url = "http://ctsit:c600f49a-9697-4358-8c3e-2e74c26f9f2f@ondemand.saucelabs.com:80/wd/hub"
 
             self.driver = webdriver.Remote(
                 command_executor=sauce_url,
