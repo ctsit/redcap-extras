@@ -47,7 +47,7 @@ class TestRedcapHooks(unittest.TestCase):
                 'tunnel-identifier': os.environ['TRAVIS_JOB_NUMBER']
             }
             print "Set desired browser capabilities"
-            sauce_url = "http://{0}:{1}@localhost:8080/wd/hub".format(
+            sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(
                 os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
 
             print "Set sauce_connect base url"
@@ -57,7 +57,7 @@ class TestRedcapHooks(unittest.TestCase):
             print "Initialized remote web driver"
             # ----------------------------------------------------------------
 
-            url = "http://localhost:8080"
+            url = "http://localhost:8998"
 
         print("Using url: {}".format(url))
         self.base_url = url
