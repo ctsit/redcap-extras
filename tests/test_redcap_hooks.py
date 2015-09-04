@@ -46,6 +46,7 @@ class TestRedcapHooks(unittest.TestCase):
                 'version': "40"
             }
             desired_cap['tunnel-identifier'] = os.environ['TRAVIS_JOB_NUMBER']
+            print desired_cap['tunnel-identifier']
             sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(
                 os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
 
