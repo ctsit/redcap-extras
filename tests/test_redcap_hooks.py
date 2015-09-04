@@ -37,7 +37,7 @@ class TestRedcapHooks(unittest.TestCase):
             # The command_executor tells the test to run on Sauce, while the desired_capabilties
             # parameter tells us which browsers and OS to spin up.
             desired_cap = {
-                'platform': "Mac OS X 10.9",
+                'platform': "Mac OS X 10.10",
                 'browserName': "firefox",
                 'version': "40"
             }
