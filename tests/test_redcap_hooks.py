@@ -47,7 +47,7 @@ class TestRedcapHooks(unittest.TestCase):
                 'tunnel-identifier': os.environ['TRAVIS_JOB_NUMBER']
             }
             print "Set desired browser capabilities"
-            sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:89/wd/hub".format(
+            sauce_url = "http://{0}:{1}@localhost:8080/wd/hub".format(
                 os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
 
             print "Set sauce_connect base url"
