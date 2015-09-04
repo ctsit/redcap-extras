@@ -33,6 +33,7 @@ class TestRedcapHooks(unittest.TestCase):
             url = "http://localhost:8080"
         else:
             print("Using SauceLabs driver")
+
             # ****************************************************************
             # This is the only code you need to edit in your existing scripts.
             # The command_executor tells the test to run on Sauce, while the
@@ -44,8 +45,13 @@ class TestRedcapHooks(unittest.TestCase):
                 'browserName': "firefox",
                 'version': "40"
             }
+
+            sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(
+                os.environ['SAUCE_USERNAME'],
+                os.environ['SAUCE_ACCESS_KEY'])
+
             self.driver = webdriver.Remote(
-                command_executor='http://ctsit:c600f49a-9697-4358-8c3e-2e74c26f9f2f@ondemand.saucelabs.com:80/wd/hub',
+                command_executor=sauce_url,
                 desired_capabilities=desired_cap)
             # ----------------------------------------------------------------
 
@@ -213,6 +219,7 @@ class TestRedcapHooks(unittest.TestCase):
         # This is where you tell Sauce Labs to stop running tests on your behalf.
         # It's important so that you aren't billed after your test finishes.
         self.driver.quit()
+
         self.assertEqual([], self.verificationErrors)
 
 if __name__ == "__main__":

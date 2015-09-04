@@ -10,13 +10,13 @@ branches:
         - master
 env:
   global:
+    - secure: X1nbrHcPZGqBOVkTDFU1BKvaXJvQc8Ej4IzkpPFdB1xTOEA1wCjJXNFrX1wteE8nWCmsrMNJ08bmzLAuCItySKdUacpuZwafHNJwsc6K5sJmXV8+b/Tz8Cf2+G0BMDpReOv1w19jG7jyqrpUSYP5jtcx6e2erTK5xva9CEqh2RI=
+    - secure: ZKysAazJQ7xkClfRIIKJHriUY33vtbobu+qHZHOuiGhmundC6IoY03tI0j6N909sW7jH8vbdCPg+HeDmnarjIC8u2UiZzKflqf4yWdJx+B7Qs/RizrmTv7cYe22W77AHIOyHy8WeZuwbDMtovb+xnZ/evUC8Rn/wS3qDtt3I9oY=
     - CI_REDCAP_ZIP=releases-lts/redcap6.5.3.zip SHARED_FOLDER=./vagrant
     - CI_REDCAP_ZIP=releases-lts/redcap6.5.9.zip SHARED_FOLDER=./vagrant
     - CI_REDCAP_ZIP=releases-standard/redcap6.8.0.zip SHARED_FOLDER=./vagrant
 addons:
-  sauce_connect:
-    username: ctsit
-    access_key: c600f49a-9697-4358-8c3e-2e74c26f9f2f
+  sauce_connect: true
 before_install:
     - ./vagrant/travis-before-install.sh
 install:
