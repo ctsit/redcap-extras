@@ -43,10 +43,10 @@ class TestRedcapHooks(unittest.TestCase):
             desired_cap = {
                 'platform': "Mac OS X 10.10",
                 'browserName': "firefox",
-                'version': "40"
+                'version': "40",
+                'tunnel-identifier': "125.1",
+                'build': os.environ['TRAVIS_BUILD_NUMBER']
             }
-            desired_cap['tunnel-identifier'] = os.environ['TRAVIS_JOB_NUMBER']
-            print desired_cap['tunnel-identifier']
             sauce_url = "http://{0}:{1}@ondemand.saucelabs.com:80/wd/hub".format(
                 os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
 
