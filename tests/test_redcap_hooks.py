@@ -47,8 +47,11 @@ class TestRedcapHooks(unittest.TestCase):
                 'tunnel-identifier': os.environ['TRAVIS_JOB_NUMBER']
             }
             print "Set desired browser capabilities"
-            sauce_url = "http://{0}:{1}@localhost:4446/wd/hub".format(
-                os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
+            print os.environ['SAUCE_APPLICATION_HOST'], ":", os.environ['SAUCE_APPLICATION_PORT']
+            sauce_url = "http://{0}:{1}@{2}:{3}/wd/hub".format(
+                os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'],
+                os.environ['SAUCE_APPLICATION_HOST'],
+                os.environ['SAUCE_APPLICATION_PORT'])
 
             print "Set sauce_connect base url"
             self.driver = webdriver.Remote(
