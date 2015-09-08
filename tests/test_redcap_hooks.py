@@ -46,15 +46,12 @@ class TestRedcapHooks(unittest.TestCase):
                 'version': "40",
                 'tunnel-identifier': os.environ['TRAVIS_JOB_NUMBER']
             }
-            print "Set desired browser capabilities"
             sauce_url = "http://{0}:{1}@ondemand.saucelabs.com/wd/hub".format(
                 os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
 
-            print "Set sauce_connect base url"
             self.driver = webdriver.Remote(
                 command_executor=sauce_url,
                 desired_capabilities=desired_cap)
-            print "Initialized remote web driver"
             # ----------------------------------------------------------------
 
             url = "http://localhost"
