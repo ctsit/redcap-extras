@@ -9,10 +9,15 @@ branches:
         - develop
         - master
 env:
+  global:
+    - secure: RRY9zxazgdg+LVxM0EsB1Fh+1BQ7YBx52KbA4/R2ga0GThIlfI2iBnmFpxLDs+jdvYLMP22YZv1PmvMHqABwcvCrfSn7+JqDrC19GPrhkwJ0JcPOd9UsvPFnzin9N+kkTfHkGTAfKi7NZDc2Kq5EzV6qhNIqcGqcsn6Cyh7HNdg=
+    - secure: lY6jbpsvD69iHCwGVom/UTvkMoxVZh29ptRocr3wjyKopqsvOr7dix18JZ/00qaCfOxqKSDKbA1+KAiWSmfXCY8Vv84SEQvIp6d+Bt4oiXZ+iFRWzHNBn5hlQSyslHwrkn+L6XBzLves63/J+gDYqv7MgkSOK5YIO8IjDn3yZ/w=
     # When you specify multiple variables per item in the env array (matrix variables), one build is triggered per item.
     - CI_REDCAP_ZIP=releases-lts/redcap6.5.3.zip SHARED_FOLDER=./vagrant
     - CI_REDCAP_ZIP=releases-lts/redcap6.5.9.zip SHARED_FOLDER=./vagrant
     - CI_REDCAP_ZIP=releases-standard/redcap6.8.0.zip SHARED_FOLDER=./vagrant
+addons:
+  sauce_connect: true
 before_install:
     - ./vagrant/travis-before-install.sh
 install:
@@ -21,15 +26,10 @@ install:
     - pip install selenium
     - pip freeze | grep selenium
     - apachectl -V
-before_script:
 script:
     - curl -s http://localhost/redcap/ | grep -i 'Welcome\|Critical Error'
     - ls /var/www/redcap/
     - python tests/test_redcap_hooks.py
-after_success:
-after_failure:
-    - curl -T screenshot-test_redcap_hooks.png http://taeber.rapczak.com/ctsit/test_redcap_hooks.php
-after_script:
 
 #addons:
 #    apt:

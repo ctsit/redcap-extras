@@ -5,6 +5,7 @@
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
@@ -31,8 +32,28 @@ class TestRedcapHooks(unittest.TestCase):
             self.driver = webdriver.Firefox()
             url = "http://localhost:8080"
         else:
-            print("Using PhantomJS driver")
-            self.driver = webdriver.PhantomJS()
+            print("Using SauceLabs driver")
+
+            # ----------------------------------------------------------------
+            # This is the only code you need to edit in your existing scripts.
+            # The command_executor tells the test to run on Sauce, while the
+            # desired_capabilties parameter tells us which browsers and OS to
+            # spin up.
+            # ----------------------------------------------------------------
+            desired_cap = {
+                'platform': "Mac OS X 10.9",
+                'browserName': "firefox",
+                'version': "40",
+                'tunnel-identifier': os.environ['TRAVIS_JOB_NUMBER']
+            }
+            sauce_url = "http://{0}:{1}@ondemand.saucelabs.com/wd/hub".format(
+                os.environ['SAUCE_USERNAME'],os.environ['SAUCE_ACCESS_KEY'])
+
+            self.driver = webdriver.Remote(
+                command_executor=sauce_url,
+                desired_capabilities=desired_cap)
+            # ----------------------------------------------------------------
+
             url = "http://localhost"
 
         print("Using url: {}".format(url))
@@ -194,6 +215,8 @@ class TestRedcapHooks(unittest.TestCase):
         finally: self.accept_next_alert = True
 
     def tearDown(self):
+        # This is where you tell Sauce Labs to stop running tests on your behalf.
+        # It's important so that you aren't billed after your test finishes.
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
 
