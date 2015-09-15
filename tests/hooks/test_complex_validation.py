@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # To run:
-#   python tests/test_redcap_hooks.py
+#   python tests/test_complex_validation.py
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -21,7 +21,7 @@ import unittest, time, re
 import os
 
 
-class TestRedcapHooks(unittest.TestCase):
+class TestComplexValidationHook(unittest.TestCase):
     def setUp(self):
 
         # set to true to test in the Vagrant
@@ -63,7 +63,7 @@ class TestRedcapHooks(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
 
-    def test_redcap_hooks(self):
+    def test_complex_validation(self):
         driver = self.driver
         try:
             driver.get(self.base_url + "/redcap/index.php")
@@ -187,8 +187,8 @@ class TestRedcapHooks(unittest.TestCase):
             print("Remove the soft link for the hook")
             os.remove('hooks/redcap_data_entry_form')
         except:
-            print("Saving sreenshot to file: screenshot-test_redcap_hooks.png")
-            driver.get_screenshot_as_file('screenshot-test_redcap_hooks.png')
+            print("Saving sreenshot to file: screenshot-test_complex_validation.png")
+            driver.get_screenshot_as_file('screenshot-test_complex_validation.png')
             raise
 
         print("Done. Yay!")
@@ -219,6 +219,7 @@ class TestRedcapHooks(unittest.TestCase):
         # It's important so that you aren't billed after your test finishes.
         self.driver.quit()
         self.assertEqual([], self.verificationErrors)
+
 
 if __name__ == "__main__":
     unittest.main()
