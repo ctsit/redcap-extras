@@ -29,7 +29,7 @@ install:
 script:
     - curl -s http://localhost/redcap/ | grep -i 'Welcome\|Critical Error'
     - ls /var/www/redcap/
-    - python tests/test_redcap_hooks.py
+    - python -m unittest discover tests/
 
 #addons:
 #    apt:
