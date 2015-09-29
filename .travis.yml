@@ -23,13 +23,14 @@ before_install:
 install:
     - sudo -E ./vagrant/bootstrap.sh
     - phantomjs --version
-    - pip install selenium
+    - pip install selenium behave
     - pip freeze | grep selenium
     - apachectl -V
 script:
     - curl -s http://localhost/redcap/ | grep -i 'Welcome\|Critical Error'
     - ls /var/www/redcap/
     - python -m unittest discover tests/
+    - behave tests/features/
 
 #addons:
 #    apt:
