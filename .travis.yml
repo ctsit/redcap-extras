@@ -30,7 +30,7 @@ script:
     - curl -s http://localhost/redcap/ | grep -i 'Welcome\|Critical Error'
     - ls /var/www/redcap/
     - python -m unittest discover tests/
-    - HOOKS_ROOT=$PWD/hooks behave tests/features/
+    - HOOKS_ROOT=$TRAVIS_BUILD_DIR/hooks behave tests/features/
 
 #addons:
 #    apt:
