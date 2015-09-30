@@ -29,7 +29,7 @@ install:
 script:
     - curl -s http://localhost/redcap/ | grep -i 'Welcome\|Critical Error'
     - ls /var/www/redcap/
-    - behave tests/features/
+    - HOOKS_BASEDIR=$TRAVIS_BUILD_DIR behave tests/features/
 
 #addons:
 #    apt:
