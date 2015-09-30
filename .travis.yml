@@ -29,8 +29,7 @@ install:
 script:
     - curl -s http://localhost/redcap/ | grep -i 'Welcome\|Critical Error'
     - ls /var/www/redcap/
-    - python -m unittest discover tests/
-    - HOOKS_ROOT=$TRAVIS_BUILD_DIR behave tests/features/
+    - behave tests/features/
 
 #addons:
 #    apt:

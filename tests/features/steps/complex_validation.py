@@ -6,7 +6,7 @@ from behave import given, when, then
 
 
 # base directory containing the "hooks/" folder
-HOOKS_ROOT=os.getenv('HOOKS_ROOT', '/redcap_data')
+HOOKS_ROOT=os.getenv('TRAVIS_BUILD_DIR', '/redcap_data')
 
 
 @given('the "Complex Validation" hook has been installed')
@@ -20,6 +20,7 @@ def given_the_hook_has_been_installed(context):
     driver.find_element_by_name("hook_functions_file").clear()
     driver.find_element_by_name("hook_functions_file")\
           .send_keys(HOOKS_ROOT + '/hooks/redcap_hooks.php')
+    print(HOOKS_ROOT + '/hooks/redcap_hooks.php')
     time.sleep(0.2)
     driver.find_element_by_css_selector('input[type="submit"]').click()
 
