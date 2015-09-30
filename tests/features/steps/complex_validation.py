@@ -1,4 +1,5 @@
 import os
+import shutil
 import time
 
 from behave import given, when, then
@@ -12,20 +13,14 @@ def given_the_hook_has_been_installed(context):
     driver.find_element_by_link_text("My Projects").click()
     driver.find_element_by_link_text("Control Center").click()
     driver.find_element_by_link_text("General Configuration").click()
-
-    try:
-        os.remove('hooks/redcap_data_entry_form')
-    except Exception as exc:
-        print("Moving on {}".format(exc))
-
-    print("Create symlink for the hook we are activating: ")
-    print("ln -s library/redcap_data_entry_form hooks/redcap_data_entry_form")
-    os.symlink('library/redcap_data_entry_form', 'hooks/redcap_data_entry_form')
     driver.find_element_by_name("hook_functions_file").clear()
-    driver.find_element_by_name("hook_functions_file").send_keys("/redcap_data/hooks/redcap_hooks.php")
+    driver.find_element_by_name("hook_functions_file")\
+          .send_keys('/redcap_data/hooks/redcap_hooks.php')
     time.sleep(0.2)
-    driver.find_element_by_css_selector("input[type=\"submit\"]").click()
-    print("Hook enabled...")
+    driver.find_element_by_css_selector('input[type="submit"]').click()
+
+    context.hook = AutomaticHookCleanup()
+    print("Hook enabled.")
 
 
 @given('a project exists with a "Demographics" form')
@@ -107,4 +102,24 @@ def then_i_should_not_see_alert(context):
         assert False, "Sadly, the alert is present."
     except context.NoSuchElementException:
         return True
+
+
+class AutomaticHookCleanup(object):
+    """ Enables the hook upon creation and disables it when destroyed """
+
+    def __init__(self):
+        try:
+            os.mkdir('hooks/redcap_data_entry_form')
+        except OSError:
+            print('"hooks/redcap_data_entry_form" already exists')
+
+        print('Copying hook file: ')
+        print('hooks/library/redcap_data_entry_form/complex_validation.php ->'
+              ' hooks/redcap_data_entry_form/')
+        shutil.copy('hooks/library/redcap_data_entry_form/complex_validation.php',
+                    'hooks/redcap_data_entry_form/')
+
+    def __del__(self):
+        os.remove('hooks/redcap_data_entry_form/complex_validation.php')
+        print('Hook removed.')
 
