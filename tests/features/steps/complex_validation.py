@@ -14,8 +14,8 @@ def given_the_hook_has_been_installed(context):
     driver.find_element_by_link_text("Control Center").click()
     driver.find_element_by_link_text("General Configuration").click()
     driver.find_element_by_name("hook_functions_file").clear()
-    driver.find_element_by_name("hook_functions_file")\
-          .send_keys('/home/travis/build/ctsit/redcap-extras/hooks/redcap_hooks.php')
+    driver.find_element_by_name("hook_functions_file").send_keys('/home/travis/build/ctsit/redcap-extras')
+    driver.find_element_by_name("hook_functions_file").send_keys('/hooks/redcap_hooks.php')
     time.sleep(0.2)
     driver.find_element_by_css_selector('input[type="submit"]').click()
 
