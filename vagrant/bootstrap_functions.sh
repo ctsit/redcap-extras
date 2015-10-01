@@ -19,12 +19,14 @@ function install_prereqs() {
     # Install the REDCap prerequisites:
     #   https://iwg.devguard.com/trac/redcap/wiki/3rdPartySoftware
 
-    apt-get update
+    if [ -z "$TRAVIS" ]; then
+        apt-get update
 
-    apt-get install -y \
-        apache2 \
-        mysql-server \
-        php5 php-pear php5-mysql php5-curl
+        apt-get install -y \
+            apache2 \
+            mysql-server \
+            php5 php-pear php5-mysql php5-curl
+    fi
 
     # configure MySQL to start every time
     update-rc.d mysql defaults
@@ -43,8 +45,10 @@ function install_redcap() {
     unzip -q $SHARED_FOLDER/$REDCAP_ZIP -d /var/www/
 
     # adjust ownership so apache can write to the temp folders
-    chown -R www-data.root /var/www/redcap/edocs/
-    chown -R www-data.root /var/www/redcap/temp/
+    if [ -z "$TRAVIS" ]; then
+        chown -R www-data.root /var/www/redcap/edocs/
+        chown -R www-data.root /var/www/redcap/temp/
+    fi
 
     # remove the hooks and plugins directory from the zip folder
     rm -rf /var/www/redcap/plugins
