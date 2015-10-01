@@ -26,10 +26,10 @@ function install_prereqs() {
             apache2 \
             mysql-server \
             php5 php-pear php5-mysql php5-curl
-    fi
 
-    # configure MySQL to start every time
-    update-rc.d mysql defaults
+        # configure MySQL to start every time
+        update-rc.d mysql defaults
+    fi
 
     # restart apache
     service apache2 restart
