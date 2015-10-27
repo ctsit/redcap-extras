@@ -92,9 +92,9 @@ This message shows that your installation appears to be working correctly.
     $ docker load -i taeber_docker-redcap.tar
 
 
-12) Run it
+12) Run it in the background and open the ports
 
-    $ docker run taeber/docker-redcap
+    $ docker run -d -P -p 80:80 --name redcap taeber/docker-redcap mysqld
 
 
 13)  Find the container id
@@ -106,19 +106,17 @@ This message shows that your installation appears to be working correctly.
 
     $ docker exec $DOCKER_ID service mysql start
     $ docker exec $DOCKER_ID mysql redcap -e 'select project_id, project_name FROM redcap_projects’
-
     $ docker exec $DOCKER_ID service apache2 start
     $ docker exec $DOCKER_ID service apache2 status
-
     $ docker exec $DOCKER_ID curl -s http://localhost/redcap/ | grep -i welcome
-
+    $ curl http://`docker-machine ip default`/redcap/ | grep -i welcome
 
 You should get:
 <pre>
 <b>Welcome to REDCap!</b>
 </pre>
 
-14) ssh into the docker
+15) ssh into the docker
 
     $ docker exec -it $DOCKER_ID bash 
 
